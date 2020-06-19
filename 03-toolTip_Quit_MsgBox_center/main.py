@@ -30,7 +30,7 @@ class JanelaPrincipal(QWidget):
         #                 x0, y0, xf, yf
         largura = 500
         altura = 200
-        self.setGeometry((centro.x() - largura/2),centro.y() - altura/2,largura,altura)
+        self.setGeometry((centro.x() - int(largura/2)),centro.y() - int(altura/2),largura,altura)
         self.setWindowTitle('Exemplo para Tooltip, signal+slot, MsgBox e centralização')
         
         # QPushButton('texto', parent(Widget))
