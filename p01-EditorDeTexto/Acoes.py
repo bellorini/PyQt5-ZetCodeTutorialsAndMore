@@ -3,11 +3,12 @@ from PyQt5.QtWidgets import QApplication, QAction, QMessageBox
 from PyQt5.QtGui import QIcon
 
 class AcoesUSeT():
-    def __init__(self,icone_path, os_sep):
+    def __init__(self,icone_path, os_sep, pai):
         # dicionário de ações
         self.acoes = dict()
         self.icone_path = icone_path
         self.os_sep = os_sep
+        self.pai = pai
         self.criaAcoes()
         self.conectaAcoes()
     
@@ -37,20 +38,67 @@ class AcoesUSeT():
         self.acoes['colar'] = QAction(QIcon(iconPath + 'colar.png'),'Colar') 
         self.acoes['colar'].setShortcut('Ctrl+V')
 
+        iconPath = self.icone_path + self.os_sep
+        self.acoes['verToolBar'] = QAction(QIcon(iconPath + 'checkBoxTrue.png'), 'Barra de Ferramentas Padrão', checkable=True)
+        self.acoes['verToolBar'].setChecked(True)
+
+
         iconPath = self.icone_path + self.os_sep + 'sobre' + self.os_sep
         self.acoes['sobre'] = QAction(QIcon(iconPath + 'iconMaster.png'),'Sobre')
 
 
     def conectaAcoes(self):
         # TODO: Conectar ações
+        # menuArquivo
+        self.acoes['novo'].triggered.connect(self.mensagemGenericaNaoImplementado)
+        self.acoes['abrir'].triggered.connect(self.mensagemGenericaNaoImplementado)
+        self.acoes['salvar'].triggered.connect(self.mensagemGenericaNaoImplementado)
+        self.acoes['salvarComo'].triggered.connect(self.mensagemGenericaNaoImplementado)
         self.acoes['sair'].triggered.connect(self.acaoEncerrar)
+
+        # menuEditar
+        self.acoes['undo'].triggered.connect(self.mensagemGenericaNaoImplementado)
+        self.acoes['redo'].triggered.connect(self.mensagemGenericaNaoImplementado)
+        self.acoes['cortar'].triggered.connect(self.mensagemGenericaNaoImplementado)
+        self.acoes['copiar'].triggered.connect(self.mensagemGenericaNaoImplementado)
+        self.acoes['colar'].triggered.connect(self.mensagemGenericaNaoImplementado)
+
+        # menuVisualizar
+        self.acoes['verToolBar'].triggered.connect(self.showToolBar)
+
+        # menuSobre
+        self.acoes['sobre'].triggered.connect(self.mostrarJanelaSobre)
 
     def getAcao(self,nome):
         return self.acoes[nome]
 
-    def mensagemGenerica(self):
+    # acoes do menu Visualizar
+    def showToolBar(self):
+
+        iconPath = self.icone_path + self.os_sep
+        if self.pai.toolBar.isHidden():
+            self.pai.toolBar.setVisible(True)
+            self.acoes['verToolBar'].setIcon(QIcon(iconPath + 'checkBoxTrue.png'))
+        else:
+            self.pai.toolBar.setVisible(False)
+            self.acoes['verToolBar'].setIcon(QIcon(iconPath + 'checkBoxFalse.png'))
+
+    # plaeholder para as ações não implementadas
+    def mensagemGenericaNaoImplementado(self):
+        msg = QMessageBox()
+        msg.setIcon(QMessageBox.Critical)
+        msg.setWindowTitle('USeT')
+        msg.setText('Work in Progress')
+        msg.setInformativeText('Função não implementada no momento.')
+        msg.setStandardButtons(QMessageBox.Ok)
+        msg.exec_()
         pass
 
     def acaoEncerrar(self):
         # TODO: verificar arquivo não salvo! 
         QApplication.instance().quit()
+
+
+    def mostrarJanelaSobre(self):
+        self.pai.subWSobre.show()
+        pass
