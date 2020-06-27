@@ -22,6 +22,7 @@ class JanelaPrincipal(QMainWindow):
         self.criaMenus()
         self.criaToolBar()
         self.criaBarraStatus()
+        self.criaAreaTexto()
 
         self.initUI()
     
@@ -33,9 +34,6 @@ class JanelaPrincipal(QMainWindow):
         largura = 800
         altura = 600
         self.setGeometry((centro.x() - int(largura/2)),centro.y() - int(altura/2),largura,altura)
-
-        self.areaTexto = QTextEdit()
-        self.setCentralWidget(self.areaTexto)
 
         self.show()
 
@@ -95,8 +93,9 @@ class JanelaPrincipal(QMainWindow):
         pass
 
     def criaAreaTexto(self):
-        pass
-    
+        self.areaTexto = QTextEdit()
+        self.setCentralWidget(self.areaTexto)
+        self.areaTexto.textChanged.connect(self.acoes.edicaoTexto)
 
     pass # JanelaPrincipal
 
@@ -108,8 +107,6 @@ class JanelaSobre(QWidget):
         self.icone_path = icone_path
         self.os_sep = os_sep
         self.pai = pai
-        
-        
 
         self.initUI()
     

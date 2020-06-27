@@ -57,8 +57,8 @@ class AcoesUSeT():
         self.acoes['sair'].triggered.connect(self.acaoEncerrar)
 
         # menuEditar
-        self.acoes['undo'].triggered.connect(self.mensagemGenericaNaoImplementado)
-        self.acoes['redo'].triggered.connect(self.mensagemGenericaNaoImplementado)
+        self.acoes['undo'].triggered.connect(self.desfazer)
+        self.acoes['redo'].triggered.connect(self.refazer)
         self.acoes['cortar'].triggered.connect(self.mensagemGenericaNaoImplementado)
         self.acoes['copiar'].triggered.connect(self.mensagemGenericaNaoImplementado)
         self.acoes['colar'].triggered.connect(self.mensagemGenericaNaoImplementado)
@@ -93,6 +93,20 @@ class AcoesUSeT():
         msg.setStandardButtons(QMessageBox.Ok)
         msg.exec_()
         pass
+
+    def edicaoTexto(self):
+        # placeholder
+        print(self.pai.areaTexto.toPlainText())
+
+    # build in undo do QTextEdit
+    # ação é gravada a cada linha
+    def desfazer(self):
+        self.pai.areaTexto.undo()
+
+    # build in redo do QTextEdit
+    # ação é gravada a cada linha
+    def refazer(self):
+        self.pai.areaTexto.redo()
 
     def acaoEncerrar(self):
         # TODO: verificar arquivo não salvo! 
